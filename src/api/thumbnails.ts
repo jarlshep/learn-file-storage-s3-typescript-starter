@@ -3,14 +3,14 @@ import { respondWithJSON } from "./json";
 import { getVideo, updateVideo, type Video } from "../db/videos";
 import type { ApiConfig } from "../config";
 import { type BunRequest } from "bun";
-import { BadRequestError, NotFoundError, UserForbiddenError } from "./errors";
+import { BadRequestError, UserForbiddenError } from "./errors";
 import path from "node:path";
 import { randomBytes } from "node:crypto";
 
-type Thumbnail = {
+/* type Thumbnail = {
   data: ArrayBuffer;
   mediaType: string;
-};
+}; */
 
 /* const videoThumbnails: Map<string, Thumbnail> = new Map();
 
@@ -59,7 +59,7 @@ export async function handlerUploadThumbnail(cfg: ApiConfig, req: BunRequest) {
     throw new BadRequestError("Not a valid thumbnail");
   }
 
-  const MAX_UPLOAD_SIZE = 10*(2**20);
+  const MAX_UPLOAD_SIZE = 10 * (2**10) * (2**10);
 
   if (thmnl.size > MAX_UPLOAD_SIZE) {
     throw new BadRequestError("File too large");
@@ -81,11 +81,6 @@ export async function handlerUploadThumbnail(cfg: ApiConfig, req: BunRequest) {
   if (!videoMetadata || userID !== videoMetadata.userID) {
     throw new UserForbiddenError("Video does not belong to user");
   }
-
-  /* const buff: Buffer = Buffer.from(arrBuff);
-  const base64Buff = buff.toString("base64");
-  const dataURL = `data:image/png;base64,${base64Buff}`;
-  const newURL = `http://localhost:8091/api/thumbnails/${dataURL}`; */
 
   // new url to serve the image
   const fileName = `${randomBytes(32).toString("base64url")}.${fileExt}`;

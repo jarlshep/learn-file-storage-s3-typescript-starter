@@ -1,1 +1,6 @@
 S3 bucket name: "tubely-748926"
+Europe (Stockholm) "eu-north-1"
+
+private: tubely-private-38475
+Europe (Stockholm) "eu-north-1"
+arn:aws:s3:::tubely-private-38475
